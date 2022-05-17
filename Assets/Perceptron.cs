@@ -16,7 +16,29 @@ public class Perceptron : MonoBehaviour {
 	double bias = 0;
 
 	public SimpleGrapher sg;
-	
+
+	void Start()
+	{
+		DrawAllPoints();
+		Train(200);
+		// draw line seperating foor items from weapon items
+		sg.DrawRay((float)(-(bias / weights[1]) / (bias / weights[0])), (float)(-bias / weights[1]), Color.red);
+
+		// test our trained perceptron
+		// should be food
+		if (CalcOutput(0.3, 0.9) == 0)
+			sg.DrawPoint(0.3f, 0.9f, Color.red);
+		else
+			sg.DrawPoint(0.3f, 0.9f, Color.yellow);
+
+		// should be weapon
+		if (CalcOutput(0.8, 0.1) == 0)
+			sg.DrawPoint(0.8f, 0.1f, Color.red);
+		else
+			sg.DrawPoint(0.8f, 0.1f, Color.yellow);
+
+	}
+
 	double DotProductBias(double[] v1, double[] v2) 
 	{
 		if (v1 == null || v2 == null)
@@ -96,26 +118,4 @@ public class Perceptron : MonoBehaviour {
 	}
 
 
-	// Use this for initialization
-	void Start () {
-		DrawAllPoints();
-		Train(200);
-		sg.DrawRay((float)(-(bias/weights[1])/(bias/weights[0])), (float)(-bias/weights[1]), Color.red);
-		
-		if(CalcOutput(0.3,0.9) == 0)
-			sg.DrawPoint(0.3f, 0.9f, Color.red);
-		else
-			sg.DrawPoint(0.3f, 0.9f, Color.yellow);
-
-		if(CalcOutput(0.8,0.1) == 0)
-			sg.DrawPoint(0.8f, 0.1f, Color.red);
-		else
-			sg.DrawPoint(0.8f, 0.1f, Color.yellow);
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 }
